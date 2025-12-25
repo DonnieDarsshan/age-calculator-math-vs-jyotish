@@ -36,3 +36,53 @@ https://donniedarsshan.github.io/age-calculator-math-vs-jyotish/
 
 ## 📂 Project Structure
 
+
+Everything is contained in a **single HTML file**.
+
+---
+
+## 🚀 How to Run Locally
+
+1. Download `index.html`
+2. Double-click it  
+   **OR**
+3. Open it in any modern browser
+
+No installation required.
+
+---
+
+## 🧠 Age Calculation Logic
+
+- **Mathematics**
+  - Counts age starting from **0**
+  - Example: newborn = 0 years
+
+- **Jyotish**
+  - Counts age starting from **1**
+  - Example: newborn = 1 year
+  - Matches traditional astrological practice
+
+---
+
+## 🛠️ Technologies Used
+
+- HTML5
+- CSS3 (Gradients, Animations)
+- Vanilla JavaScript
+
+---
+
+## 📜 License
+
+This project is **open-source**.  
+You are free to use, modify, and share it.
+
+---
+
+## 🙏 Acknowledgement
+
+Inspired by the difference between **modern mathematical age calculation** and **traditional Jyotish age counting systems**.
+
+
+
