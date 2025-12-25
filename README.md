@@ -28,9 +28,9 @@ Built as a **pure HTML + CSS + JavaScript** project — no frameworks, no depend
 ## 🌐 Live Demo
 
 👉 **Live Website:**  
-https://<your-username>.github.io/age-calculator-math-vs-jyotish/
 
-(Replace `<your-username>` with your GitHub username)
+https://donniedarsshan.github.io/age-calculator-math-vs-jyotish/
+
 
 ---
 
