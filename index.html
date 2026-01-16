@@ -65,6 +65,27 @@ input{
   outline:none;
 }
 
+
+
+/* ================= DATE PICKER VISIBILITY FIX ================= */
+input[type="date"]::-webkit-calendar-picker-indicator{
+  filter: invert(1) brightness(1.6);
+  cursor: pointer;
+}
+
+
+
+input[type="date"]:hover::-webkit-calendar-picker-indicator{
+  filter: invert(1) brightness(2);
+}
+
+
+
+
+
+
+
+
 input:focus{
   box-shadow:0 0 10px rgba(250,204,21,.5);
 }
@@ -117,19 +138,47 @@ button:hover{
 .math{color:#93c5fd}
 .jyotish{color:#fbbf24}
 
+
+
+
 .footer{
   text-align:center;
   font-size:12px;
   opacity:.7;
   margin-top:12px;
 }
+
+
+
+
+
+
+
+
+
+/* ================= MODULE STACK WRAPPER ================= */
+.modules-stack{
+  display:flex;
+  flex-direction:row;      /* SIDE BY SIDE */
+  gap:80px;                /* HORIZONTAL SPACE BETWEEN MODULES */
+  align-items:flex-start;
+}
+
+
+
+
+
 </style>
 </head>
 
 <body>
 
+<div class="modules-stack">
+
 <div class="container">
   <h1>Age Calculator</h1>
+
+
 
   <label>Date of Birth</label>
   <input type="date" id="dob">
@@ -157,22 +206,27 @@ function calculateAge(){
   const dobVal = document.getElementById("dob").value;
   const curVal = document.getElementById("currentDate").value;
 
-  if(!dobVal || !curVal){
-    alert("Please select both dates");
-    return;
-  }
+  
 
   const dob = new Date(dobVal);
   const current = new Date(curVal);
 
-  if(current < dob){
-    alert("Current date cannot be before Date of Birth");
-    return;
-  }
+	// Determine direction (past or future)
+	let sign = "";
+	let start = dob;
+	let end = current;
 
-  let years = current.getFullYear() - dob.getFullYear();
-  let months = current.getMonth() - dob.getMonth();
-  let days = current.getDate() - dob.getDate();
+	if(current < dob){
+	  sign = "-";
+	  start = current;
+	  end = dob;
+	}
+
+
+ let years = end.getFullYear() - start.getFullYear();
+let months = end.getMonth() - start.getMonth();
+let days = end.getDate() - start.getDate();
+
 
   if(days < 0){
     months--;
@@ -185,7 +239,7 @@ function calculateAge(){
     months += 12;
   }
 
-  const jyotishYears = years + 1;
+  const jyotishYears = sign === "-" ? -(years + 1) : years + 1;
 
   document.getElementById("output").innerHTML = `
     <div class="result">
@@ -200,6 +254,119 @@ function calculateAge(){
   `;
 }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =====================================================
+     DATE DIFFERENCE CALCULATOR (SEPARATE MODULE)
+     ===================================================== -->
+
+<div class="container">
+
+  <h1>Date Difference</h1>
+
+  <label>From Date</label>
+  <input type="date" id="fromDate">
+
+  <label>To Date</label>
+  <input type="date" id="toDate">
+
+  <button onclick="calculateDifference()">Calculate Difference</button>
+
+  <div id="diffOutput"></div>
+
+  <div class="footer">
+    Pure Calendar Difference (Years • Months • Days)
+  </div>
+</div>
+
+<script>
+function calculateDifference(){
+
+  // Read input values
+  const fromVal = document.getElementById("fromDate").value;
+  const toVal   = document.getElementById("toDate").value;
+
+  // Validation: both dates required
+  if(!fromVal || !toVal){
+    alert("Please select both dates");
+    return;
+  }
+
+  // Convert to Date objects
+  const fromDate = new Date(fromVal);
+  const toDate   = new Date(toVal);
+
+  // Validation: order check
+  if(toDate < fromDate){
+    alert("To Date must be after From Date");
+    return;
+  }
+
+  // Initial difference
+  let years  = toDate.getFullYear() - fromDate.getFullYear();
+  let months = toDate.getMonth() - fromDate.getMonth();
+  let days   = toDate.getDate() - fromDate.getDate();
+
+  // Adjust negative days
+  if(days < 0){
+    months--;
+    const daysInPrevMonth = new Date(
+      toDate.getFullYear(),
+      toDate.getMonth(),
+      0
+    ).getDate();
+    days += daysInPrevMonth;
+  }
+
+  // Adjust negative months
+  if(months < 0){
+    years--;
+    months += 12;
+  }
+
+  // Output result
+  document.getElementById("diffOutput").innerHTML = `
+    <div class="result">
+      <div class="section-title">Date Difference</div>
+      <div class="age math">
+        ${years} years ${months} months ${days} days
+      </div>
+    </div>
+  `;
+}
+</script>
+
+
+
+</div> <!-- end modules-stack -->
+
+
+
+
+
+
 
 </body>
 </html>
