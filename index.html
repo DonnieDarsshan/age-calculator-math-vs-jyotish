@@ -301,40 +301,68 @@ let days = end.getDate() - start.getDate();
   </div>
 </div>
 
+
+
+
+
+
 <script>
+function setTodayForDateDifference(){
+
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
+
+  // Set BOTH From Date and To Date as today
+  document.getElementById("fromDate").value = today;
+  document.getElementById("toDate").value   = today;
+}
+
+// Run immediately when page loads
+setTodayForDateDifference();
+</script>
+
+
+
+
+
+
+
+<script>
+
+
+
 function calculateDifference(){
 
-  // Read input values
   const fromVal = document.getElementById("fromDate").value;
   const toVal   = document.getElementById("toDate").value;
 
-  // Validation: both dates required
-  if(!fromVal || !toVal){
-    alert("Please select both dates");
-    return;
-  }
+  if(!fromVal || !toVal) return; // silent
 
-  // Convert to Date objects
-  const fromDate = new Date(fromVal);
-  const toDate   = new Date(toVal);
+  let fromDate = new Date(fromVal);
+  let toDate   = new Date(toVal);
 
-  // Validation: order check
+  // ➖ Determine sign and normalize order
+  let sign = "";
+  let start = fromDate;
+  let end   = toDate;
+
   if(toDate < fromDate){
-    alert("To Date must be after From Date");
-    return;
+    sign = "-";
+    start = toDate;
+    end   = fromDate;
   }
 
   // Initial difference
-  let years  = toDate.getFullYear() - fromDate.getFullYear();
-  let months = toDate.getMonth() - fromDate.getMonth();
-  let days   = toDate.getDate() - fromDate.getDate();
+  let years  = end.getFullYear() - start.getFullYear();
+  let months = end.getMonth() - start.getMonth();
+  let days   = end.getDate() - start.getDate();
 
   // Adjust negative days
   if(days < 0){
     months--;
     const daysInPrevMonth = new Date(
-      toDate.getFullYear(),
-      toDate.getMonth(),
+      end.getFullYear(),
+      end.getMonth(),
       0
     ).getDate();
     days += daysInPrevMonth;
@@ -346,16 +374,26 @@ function calculateDifference(){
     months += 12;
   }
 
-  // Output result
+  // Output result with sign only
   document.getElementById("diffOutput").innerHTML = `
     <div class="result">
       <div class="section-title">Date Difference</div>
       <div class="age math">
-        ${years} years ${months} months ${days} days
+        ${sign}${years} years ${months} months ${days} days
       </div>
     </div>
   `;
 }
+
+
+
+
+
+
+
+
+
+
 </script>
 
 
