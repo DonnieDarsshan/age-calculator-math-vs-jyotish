@@ -9,7 +9,16 @@
 body{
   margin:0;
   min-height:100vh;
+  padding-top:80px;        /* ⬆️ space above Age Calculators */
+  padding-bottom:120px;   /* ⬇️ space after Date Difference */
   background:
+
+  
+  
+  
+  
+  
+  
     radial-gradient(circle at top, #3b0764, #020617 60%),
     linear-gradient(135deg, #020617, #000);
   font-family:"Segoe UI", system-ui, sans-serif;
@@ -159,12 +168,33 @@ button:hover{
 /* ================= MODULE STACK WRAPPER ================= */
 .modules-stack{
   display:flex;
-  flex-direction:row;      /* SIDE BY SIDE */
-  gap:80px;                /* HORIZONTAL SPACE BETWEEN MODULES */
+  flex-direction:column;
+  gap:120px;   /* ⬅️ space BETWEEN Age row & Date Difference row */
   align-items:flex-start;
 }
 
 
+
+
+
+
+
+
+/* ================= MODULE STACK WRAPPER ================= */
+.modules-stack{
+  display:flex;
+  flex-direction:column;   /* STACK ROWS */
+  gap:80px;
+  align-items:flex-start;
+}
+
+.modules-row{
+  display:flex;
+  flex-direction:row;
+  gap:80px;
+  margin-bottom:20px;  /* subtle vertical breathing space */
+  align-items:flex-start;
+}
 
 
 
@@ -173,64 +203,201 @@ button:hover{
 
 <body>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="modules-stack">
 
-<div class="container">
-  <h1>Age Calculator</h1>
+  <!-- ================= ROW 1 : AGE CALCULATORS ================= -->
+  <div class="modules-row" style="margin-bottom:160px;">
+
+
+    <!-- AGE CALCULATOR 1 (ORIGINAL LOGIC, IDS KEPT) -->
+    <div class="container">
+      <h1>Age Calculator (Male)</h1>
+
+      <label>Date of Birth</label>
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+     <input type="date" id="dob">
 
 
 
-  <label>Date of Birth</label>
-  <input type="date" id="dob">
 
-  <label>Current Date</label>
-  <input type="date" id="currentDate">
 
-  <button onclick="calculateAge()">Calculate Age</button>
 
-  <div id="output"></div>
 
-  <div class="footer">
-    Mathematics (0-based) • Jyotish (1-based)
+
+
+      <label>Current Date</label>
+      <input type="date" id="currentDate">
+
+      <button onclick="calculateAge()">Calculate Age</button>
+
+      <div id="output"></div>
+
+      <div class="footer">
+        Mathematics (0-based) • Jyotish (1-based)
+      </div>
+    </div>
+
+    <!-- AGE CALCULATOR 2 (CLONE) -->
+    <div class="container">
+      <h1>Age Calculator (Female)</h1>
+
+      <label>Date of Birth</label>
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+      <input type="date" id="dob2">
+
+	
+	
+	
+	
+
+      <label>Current Date</label>
+      <input type="date" id="currentDate2">
+
+      <button onclick="calculateAge2()">Calculate Age</button>
+
+      <div id="output2"></div>
+
+      <div class="footer">
+        Mathematics (0-based) • Jyotish (1-based)
+      </div>
+    </div>
+
   </div>
-</div>
+
+  <!-- ================= ROW 2 : DATE DIFFERENCE ================= -->
+  <div class="modules-row">
+
+    <!-- DATE DIFFERENCE 1 (ORIGINAL LOGIC, IDS KEPT) -->
+    <div class="container">
+      <h1>Date Difference</h1>
+
+      <label>From Date</label>
+      <input type="date" id="fromDate">
+
+      <label>To Date</label>
+      <input type="date" id="toDate">
+
+      <button onclick="calculateDifference()">Calculate Difference</button>
+
+      <div id="diffOutput"></div>
+
+      <div class="footer">
+        Pure Calendar Difference (Years • Months • Days)
+      </div>
+    </div>
+
+    <!-- DATE DIFFERENCE 2 (CLONE) -->
+    <div class="container">
+      <h1>Date Difference</h1>
+
+      <label>From Date</label>
+      <input type="date" id="fromDate2">
+
+      <label>To Date</label>
+      <input type="date" id="toDate2">
+
+      <button onclick="calculateDifference2()">Calculate Difference</button>
+
+      <div id="diffOutput2"></div>
+
+      <div class="footer">
+        Pure Calendar Difference (Years • Months • Days)
+      </div>
+    </div>
+
+  </div>
+
+</div> <!-- end modules-stack -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
-function setToday(){
-  const today = new Date().toISOString().split("T")[0];
-  document.getElementById("currentDate").value = today;
-}
-setToday();
-
 function calculateAge(){
-  const dobVal = document.getElementById("dob").value;
-  const curVal = document.getElementById("currentDate").value;
 
-  
+
+	const dobVal = document.getElementById("dob").value;
+	if(!dobVal) return;
+
+	
+	
+	
+	
+	
+
+  const curVal = document.getElementById("currentDate").value;
+  if(!dobVal || !curVal) return;
 
   const dob = new Date(dobVal);
   const current = new Date(curVal);
 
-	// Determine direction (past or future)
-	let sign = "";
-	let start = dob;
-	let end = current;
+  let sign = "";
+  let start = dob;
+  let end = current;
 
-	if(current < dob){
-	  sign = "-";
-	  start = current;
-	  end = dob;
-	}
+  if(current < dob){
+    sign = "-";
+    start = current;
+    end = dob;
+  }
 
+  let years  = end.getFullYear() - start.getFullYear();
+  if(sign === "-") years = -years;
 
- let years = end.getFullYear() - start.getFullYear();
-let months = end.getMonth() - start.getMonth();
-let days = end.getDate() - start.getDate();
-
+  let months = end.getMonth() - start.getMonth();
+  let days   = end.getDate() - start.getDate();
 
   if(days < 0){
     months--;
-    const prevMonth = new Date(current.getFullYear(), current.getMonth(), 0);
+    const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
     days += prevMonth.getDate();
   }
 
@@ -239,14 +406,98 @@ let days = end.getDate() - start.getDate();
     months += 12;
   }
 
-  const jyotishYears = sign === "-" ? -(years + 1) : years + 1;
+  const jyotishYears = sign === "-" 
+  ? -(Math.abs(years) + 1) 
+  :  (Math.abs(years) + 1);
 
   document.getElementById("output").innerHTML = `
     <div class="result">
       <div class="section-title">According to Mathematics</div>
+      
+	  
+	  <div class="age math">${years} years ${months} months ${days} days</div>
+
+	  
+	  
+	  
+	  
+	  
+    </div>
+    <div class="result">
+      <div class="section-title">According to Jyotish</div>
+      <div class="age jyotish">${jyotishYears} years ${months} months ${days} days</div>
+    </div>
+  `;
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+function calculateAge2(){
+
+
+
+
+	const dobVal = document.getElementById("dob2").value;
+	if(!dobVal) return;
+
+	
+	
+	
+	
+  const curVal = document.getElementById("currentDate2").value;
+  if(!dobVal || !curVal) return;
+
+  const dob = new Date(dobVal);
+  const current = new Date(curVal);
+
+  let sign = "";
+  let start = dob;
+  let end = current;
+
+  if(current < dob){
+    sign = "-";
+    start = current;
+    end = dob;
+  }
+
+  let years  = end.getFullYear() - start.getFullYear();
+	if(sign === "-") years = -years;
+
+  
+  
+  let months = end.getMonth() - start.getMonth();
+  let days   = end.getDate() - start.getDate();
+
+  if(days < 0){
+    months--;
+    const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
+    days += prevMonth.getDate();
+  }
+
+  if(months < 0){
+    years--;
+    months += 12;
+  }
+
+  const jyotishYears = sign === "-" 
+  ? -(Math.abs(years) + 1) 
+  :  (Math.abs(years) + 1);
+
+  document.getElementById("output2").innerHTML = `
+    <div class="result">
+      <div class="section-title">According to Mathematics</div>
       <div class="age math">${years} years ${months} months ${days} days</div>
     </div>
-
     <div class="result">
       <div class="section-title">According to Jyotish</div>
       <div class="age jyotish">${jyotishYears} years ${months} months ${days} days</div>
@@ -268,80 +519,20 @@ let days = end.getDate() - start.getDate();
 
 
 
-
-
-
-
-
-
-
-
-
-
-<!-- =====================================================
-     DATE DIFFERENCE CALCULATOR (SEPARATE MODULE)
-     ===================================================== -->
-
-<div class="container">
-
-  <h1>Date Difference</h1>
-
-  <label>From Date</label>
-  <input type="date" id="fromDate">
-
-  <label>To Date</label>
-  <input type="date" id="toDate">
-
-  <button onclick="calculateDifference()">Calculate Difference</button>
-
-  <div id="diffOutput"></div>
-
-  <div class="footer">
-    Pure Calendar Difference (Years • Months • Days)
-  </div>
-</div>
-
-
-
-
-
-
 <script>
-function setTodayForDateDifference(){
-
-  // Get today's date in YYYY-MM-DD format
-  const today = new Date().toISOString().split("T")[0];
-
-  // Set BOTH From Date and To Date as today
-  document.getElementById("fromDate").value = today;
-  document.getElementById("toDate").value   = today;
-}
-
-// Run immediately when page loads
-setTodayForDateDifference();
-</script>
-
-
-
-
-
-
-
-<script>
-
 
 
 function calculateDifference(){
-
   const fromVal = document.getElementById("fromDate").value;
   const toVal   = document.getElementById("toDate").value;
+  if(!fromVal || !toVal) return;
 
-  if(!fromVal || !toVal) return; // silent
+  const [fy, fm, fd] = fromVal.split("-").map(Number);
+  const [ty, tm, td] = toVal.split("-").map(Number);
 
-  let fromDate = new Date(fromVal);
-  let toDate   = new Date(toVal);
+  let fromDate = new Date(fy, fm - 1, fd);
+  let toDate   = new Date(ty, tm - 1, td);
 
-  // ➖ Determine sign and normalize order
   let sign = "";
   let start = fromDate;
   let end   = toDate;
@@ -352,29 +543,20 @@ function calculateDifference(){
     end   = fromDate;
   }
 
-  // Initial difference
   let years  = end.getFullYear() - start.getFullYear();
   let months = end.getMonth() - start.getMonth();
   let days   = end.getDate() - start.getDate();
 
-  // Adjust negative days
   if(days < 0){
     months--;
-    const daysInPrevMonth = new Date(
-      end.getFullYear(),
-      end.getMonth(),
-      0
-    ).getDate();
-    days += daysInPrevMonth;
+    days += new Date(end.getFullYear(), end.getMonth(), 0).getDate();
   }
 
-  // Adjust negative months
   if(months < 0){
     years--;
     months += 12;
   }
 
-  // Output result with sign only
   document.getElementById("diffOutput").innerHTML = `
     <div class="result">
       <div class="section-title">Date Difference</div>
@@ -393,14 +575,87 @@ function calculateDifference(){
 
 
 
-
 </script>
 
 
 
-</div> <!-- end modules-stack -->
 
 
+
+
+
+<script>
+function calculateDifference2(){
+  const fromVal = document.getElementById("fromDate2").value;
+  const toVal   = document.getElementById("toDate2").value;
+  if(!fromVal || !toVal) return;
+
+  const [fy, fm, fd] = fromVal.split("-").map(Number);
+  const [ty, tm, td] = toVal.split("-").map(Number);
+
+  let fromDate = new Date(fy, fm - 1, fd);
+  let toDate   = new Date(ty, tm - 1, td);
+
+  let sign = "";
+  let start = fromDate;
+  let end   = toDate;
+
+  if(toDate < fromDate){
+    sign = "-";
+    start = toDate;
+    end   = fromDate;
+  }
+
+  let years  = end.getFullYear() - start.getFullYear();
+  let months = end.getMonth() - start.getMonth();
+  let days   = end.getDate() - start.getDate();
+
+  if(days < 0){
+    months--;
+    days += new Date(end.getFullYear(), end.getMonth(), 0).getDate();
+  }
+
+  if(months < 0){
+    years--;
+    months += 12;
+  }
+
+  document.getElementById("diffOutput2").innerHTML = `
+    <div class="result">
+      <div class="section-title">Date Difference</div>
+      <div class="age math">
+        ${sign}${years} years ${months} months ${days} days
+      </div>
+    </div>
+  `;
+}
+</script>
+
+
+
+
+
+
+
+<script>
+(function setTodayForAllNonDOBDates(){
+  const today = new Date().toISOString().split("T")[0];
+
+  const ids = [
+    "currentDate",
+    "currentDate2",
+    "fromDate",
+    "toDate",
+    "fromDate2",
+    "toDate2"
+  ];
+
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = today;
+  });
+})();
+</script>
 
 
 
