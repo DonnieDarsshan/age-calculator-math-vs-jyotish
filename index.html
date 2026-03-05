@@ -72,22 +72,44 @@ input{
   border:1px solid #facc15;
   border-radius:8px;
   outline:none;
+  color-scheme: dark;
 }
 
+/* ===== FIX CLEAR (X) BUTTON VISIBILITY ===== */
+input[type="date"]::-webkit-clear-button{
+  filter: invert(1) brightness(2.5) contrast(1.2);
+  cursor:pointer;
+}
 
+input[type="date"]::-webkit-clear-button:hover{
+  filter: invert(1) brightness(3.2);
+}
 
-/* ================= DATE PICKER VISIBILITY FIX ================= */
+/* ================= DARK THEME DATE PICKER FIX ================= */
+/* ================= FORCE VISIBLE DATE PICKER ICON ================= */
+
+input[type="date"]{
+  color-scheme: dark;
+  position: relative;
+}
+
+/* calendar icon */
 input[type="date"]::-webkit-calendar-picker-indicator{
-  filter: invert(1) brightness(1.6);
+  opacity: 1;
+  filter: invert(1) brightness(3) contrast(1.4);
   cursor: pointer;
 }
 
-
-
-input[type="date"]:hover::-webkit-calendar-picker-indicator{
-  filter: invert(1) brightness(2);
+/* hover glow */
+input[type="date"]::-webkit-calendar-picker-indicator:hover{
+  filter: invert(1) brightness(4) contrast(1.6);
 }
 
+/* clear X button */
+input[type="date"]::-webkit-clear-button{
+  filter: invert(1) brightness(3);
+  cursor: pointer;
+}
 
 
 
@@ -198,6 +220,94 @@ button:hover{
 
 
 
+
+
+
+
+/* ================= AGE GAP FULL WIDTH BOX ================= */
+.age-gap-box{
+  width: calc(440px * 2 + 80px);   /* same width as both calculators + gap */
+  background:#000;
+  border:1px solid rgba(234,179,8,.35);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:
+    0 0 30px rgba(234,179,8,.15),
+    inset 0 0 20px rgba(234,179,8,.08);
+}
+
+.age-gap-title{
+  font-size:20px;
+  font-weight:700;
+  color:#facc15;
+  margin-bottom:8px;
+}
+
+.age-gap-value{
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.4px;
+  color:#93c5fd;
+}
+
+
+
+
+
+
+
+
+
+/* 1. The Main Input Field */
+input[type="date"] {
+  color-scheme: dark; /* Forces native calendar popup to be dark-themed */
+  background: #020617;
+  color: #fde68a; /* Light yellow text for readability */
+  border: 2px solid #facc15; /* Solid yellow border */
+  padding: 10px 12px;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 5px rgba(250, 204, 21, 0.2); /* Subtle initial glow */
+}
+
+/* 2. Glow effect on Hover and Focus */
+input[type="date"]:hover, 
+input[type="date"]:focus {
+  border-color: #fef08a;
+  box-shadow: 0 0 15px rgba(250, 204, 21, 0.6), 
+              inset 0 0 8px rgba(250, 204, 21, 0.3);
+}
+
+/* 3. MAKE THE CALENDAR ICON YELLOW & GLOWING */
+/* This is the key part for visibility */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  
+  /* Filter magic: Invert to white, then shift to Yellow */
+  filter: invert(0.8) sepia(1) saturate(10) hue-rotate(10deg) brightness(1.3);
+  
+  /* Add a yellow glow directly to the icon */
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.8);
+  background-color: rgba(250, 204, 21, 0.1);
+  transition: all 0.2s ease;
+}
+
+/* 4. Icon Interaction */
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  filter: invert(0.8) sepia(1) saturate(20) hue-rotate(10deg) brightness(1.6
+
+
+
+
+
+
+
+
+
+
 </style>
 </head>
 
@@ -221,7 +331,7 @@ button:hover{
 <div class="modules-stack">
 
   <!-- ================= ROW 1 : AGE CALCULATORS ================= -->
-  <div class="modules-row" style="margin-bottom:160px;">
+  <div class="modules-row" style="margin-bottom:40px;">
 
 
     <!-- AGE CALCULATOR 1 (ORIGINAL LOGIC, IDS KEPT) -->
@@ -250,7 +360,7 @@ button:hover{
       <label>Current Date</label>
       <input type="date" id="currentDate">
 
-      <button onclick="calculateAge()">Calculate Age</button>
+      
 
       <div id="output"></div>
 
@@ -283,7 +393,7 @@ button:hover{
       <label>Current Date</label>
       <input type="date" id="currentDate2">
 
-      <button onclick="calculateAge2()">Calculate Age</button>
+      
 
       <div id="output2"></div>
 
@@ -292,9 +402,26 @@ button:hover{
       </div>
     </div>
 
+ 
+ 
+   </div>
+
+  <!-- ================= AGE GAP FULL WIDTH ================= -->
+  <div class="modules-row">
+    <div class="age-gap-box">
+      <div class="age-gap-title">Age Difference (Male vs Female)</div>
+      <div id="ageGapOutput" class="age-gap-value">
+        Waiting for both dates...
+      </div>
+    </div>
   </div>
 
   <!-- ================= ROW 2 : DATE DIFFERENCE ================= -->
+ 
+ 
+ 
+ 
+ 
   <div class="modules-row">
 
     <!-- DATE DIFFERENCE 1 (ORIGINAL LOGIC, IDS KEPT) -->
@@ -307,7 +434,7 @@ button:hover{
       <label>To Date</label>
       <input type="date" id="toDate">
 
-      <button onclick="calculateDifference()">Calculate Difference</button>
+      
 
       <div id="diffOutput"></div>
 
@@ -326,7 +453,7 @@ button:hover{
       <label>To Date</label>
       <input type="date" id="toDate2">
 
-      <button onclick="calculateDifference2()">Calculate Difference</button>
+      
 
       <div id="diffOutput2"></div>
 
@@ -655,6 +782,94 @@ function calculateDifference2(){
     if(el) el.value = today;
   });
 })();
+</script>
+
+
+
+<script>
+
+/* ================= AUTO LIVE CALCULATIONS ================= */
+
+function runAllCalculations(){
+  calculateAge();
+  calculateAge2();
+  calculateDifference();
+  calculateDifference2();
+  calculateMaleFemaleGap();   // your black box difference
+}
+
+/* ALL DATE INPUT IDS */
+[
+  "dob",
+  "currentDate",
+  "dob2",
+  "currentDate2",
+  "fromDate",
+  "toDate",
+  "fromDate2",
+  "toDate2"
+].forEach(id=>{
+  const el = document.getElementById(id);
+  if(el){
+    el.addEventListener("change", runAllCalculations);
+    el.addEventListener("input", runAllCalculations);
+  }
+});
+
+/* RUN ON PAGE LOAD IF VALUES EXIST */
+runAllCalculations();
+
+</script>
+
+
+
+
+
+
+<script>
+function calculateMaleFemaleGap(){
+
+  const maleDOB   = document.getElementById("dob").value;
+  const femaleDOB = document.getElementById("dob2").value;
+  if(!maleDOB || !femaleDOB) return;
+
+  const [my, mm, md] = maleDOB.split("-").map(Number);
+  const [fy, fm, fd] = femaleDOB.split("-").map(Number);
+
+  let maleDate   = new Date(my, mm - 1, md);
+  let femaleDate = new Date(fy, fm - 1, fd);
+
+  let sign = "";
+  let start = maleDate;
+  let end   = femaleDate;
+
+  if(femaleDate < maleDate){
+    sign = "-";        // female older
+    start = femaleDate;
+    end   = maleDate;
+  }
+
+  let years  = end.getFullYear() - start.getFullYear();
+  let months = end.getMonth() - start.getMonth();
+  let days   = end.getDate() - start.getDate();
+
+  if(days < 0){
+    months--;
+    days += new Date(end.getFullYear(), end.getMonth(), 0).getDate();
+  }
+
+  if(months < 0){
+    years--;
+    months += 12;
+  }
+
+  document.getElementById("ageGapOutput").innerHTML =
+    `${sign}${years} years ${months} months ${days} days`;
+}
+
+/* AUTO TRIGGER WHEN DOB ENTERED */
+document.getElementById("dob").addEventListener("change", calculateMaleFemaleGap);
+document.getElementById("dob2").addEventListener("change", calculateMaleFemaleGap);
 </script>
 
 
